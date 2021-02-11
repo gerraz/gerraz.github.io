@@ -1,32 +1,83 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Procrastinate.</title>
-  <link rel="stylesheet" href="style.css">
-  <!-- ниже подключили стили для мобильных устройств: в конце урока сможете поделиться проектом в социальных сетях без страха, что на телефоне друга или подруги будет выглядеть некрасиво -->
-  <link rel="stylesheet" href="https://code.s3.yandex.net/web-code/adaptive.css">
-  <link rel="icon" type="image" href="https://code.s3.yandex.net/web-code/js-favicon.ico">
+  <link rel="stylesheet" href="lib/style.css">
+  <h1>Реестр авто Боевой Классики МСК и МО</h1>
+  <h2>(cервисное меню)</h2>
+
 </head>
+
 <body>
-  <div class="header">
-    <p class="logo">Procrastinate.</p>
-    <div class="button">Ещё идея</div>
-  </div>
 
-  <img class="image" src="https://code.s3.yandex.net/web-code/procrastinate/9.png">
 
-  <div class="advice">
-    <span>Не писать код, а</span>
-    <span class="phrase">что бы поделать?</span>
-    <img class="cursor" src="https://code.s3.yandex.net/web-code/cursor.gif">
-  </div>
+  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+var config = {
+  apiKey: "AIzaSyDzWaD3mNAAohnQS1LTK4cqDTd5-XO15oA",
+  authDomain: "slavinator-53850.firebaseapp.com",
+  databaseURL: "https://slavinator-53850-default-rtdb.firebaseio.com",
+  projectId: "slavinator-53850",
+  storageBucket: "slavinator-53850.appspot.com",
+  messagingSenderId: "528734218553",
+  appId: "1:528734218553:web:6ce931adf1e9fd0cad20e8"
+  };
+    firebase.initializeApp(config);
+  </script>
 
-  <p class="footer">© 2020 Сделал GerRaz</p>
+  <script>
+    function er1() {
+      firebase.database().ref("guys/" + document.getElementById("id_value").value).set(document.getElementById("id_value").value);
+      firebase.database().ref("guys/" + document.getElementById("id_value").value + "/name").set(document.getElementById("name_value").value);
+      firebase.database().ref("guys/" + document.getElementById("id_value").value + "/secondname").set(document.getElementById("secondname_value").value);
+      firebase.database().ref("guys/" + document.getElementById("id_value").value + "/lastname").set(document.getElementById("lastname_value").value);
+      firebase.database().ref("guys/" + document.getElementById("id_value").value + "/footsize").set(document.getElementById("footsize_value").value);
+      firebase.database().ref("guys/" + document.getElementById("id_value").value + "/url").set(document.getElementById("url_value").value);
+    }
 
-  <script src="https://code.s3.yandex.net/web-code/smoothly.js"></script>
-  <script src="script.js"></script>
+    function er2() {
+      var b = document.getElementById("id_show").value
+      var a = firebase.database().ref('/guys');
+      a.on('value', function(snapshot) {
+        var snap = snapshot.val();
+        var g = snap[b];
+        document.getElementById("inf").innerHTML ="Госномер: " + b + "<br> Марка: " + g.name + "<br> Модель: " + g.secondname + "<br> Владелец: " + g.lastname + "<br> Иные данные: " + g.footsize +"<br Фото: > <img src=" + g.url + ">";
+      });
+    }
+
+
+
+
+
+  </script>
+
+  Госномер   
+  <input type="text" class="form-control" id="id_value" placeholder="" value="" />
+  <br> Марка
+  <input type="text" class="form-control" id="name_value" placeholder="" value="" />
+  <br> Модель
+  <input type="text" class="form-control" id="secondname_value" placeholder="" value="" />
+  <br> Владелец
+  <input type="text" class="form-control" id="lastname_value" placeholder="" value="" />
+  <br> Иные данные
+  <input type="text" class="form-control" id="footsize_value" placeholder="" value="" />
+  <br> Ссылка на фото
+  <input type="text" id="url_value" placeholder="" value="" />
+  <br>
+  <br>
+  <a href="#on" class="button15" onclick="er1()">Добавить авто в базу</a>
+  <br>
+  <br> Госномер
+  <input value="" id="id_show" type="text" />
+  <br>
+  <br>
+  <a href="#on" class="button15" onclick="er2()">Вывести </a>
+  <br>
+
+  <div id="inf"> </div>
+
+
+
 </body>
 </html>
